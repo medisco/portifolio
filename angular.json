@@ -121,8 +121,16 @@
               "devServerTarget": "portifolio:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {}
         }
       }
-    }},
-  "defaultProject": "portifolio"
+    }
+  },
+  "defaultProject": "portifolio",
+  "cli": {
+    "analytics": "dcf30ab4-de98-47a3-8a5d-9fbf800d42bd"
+  }
 }
