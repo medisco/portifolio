@@ -1,17 +1,17 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import { blogPosts } from "@/lib/data";
-
-export const metadata = {
-  title: "Writing",
-  description:
-    "Technical writing on blockchain security, smart contract analysis, and distributed systems.",
-};
+import BlogSearch from "@/components/BlogSearch";
 
 export default function BlogPage() {
   const sortedPosts = [...blogPosts].sort(
     (a, b) =>
       new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
   );
+
+  const [filteredPosts, setFilteredPosts] = useState(sortedPosts);
 
   return (
     <div className="container-editorial">
@@ -23,8 +23,10 @@ export default function BlogPage() {
           and distributed systems architecture.
         </p>
 
+        <BlogSearch posts={sortedPosts} onFilter={setFilteredPosts} />
+
         <div className="space-y-0">
-          {sortedPosts.map((post) => {
+          {filteredPosts.map((post) => {
             const date = new Date(post.publishedAt);
             const formattedDate = date.toLocaleDateString("en-US", {
               year: "numeric",
