@@ -52,38 +52,35 @@ export default async function BlogPostPage({ params }: Props) {
   }).format(new Date(post.publishedAt));
 
   return (
-    <div className="container-section py-16">
-      <div className="max-w-2xl mx-auto">
-        <Link
-          href="/blog"
-          className="btn btn-ghost mb-8 -ml-2 text-[var(--color-text-secondary)]"
-        >
-          ← All posts
+    <div className="container-editorial">
+      <div className="section-major">
+        <Link href="/blog" className="text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors mb-8 inline-block">
+          ← Writing
         </Link>
 
-        <header className="mb-10">
-          <div className="flex flex-wrap gap-1.5 mb-4">
-            {post.tags.map((tag) => (
-              <span key={tag} className="badge">
-                {tag}
-              </span>
-            ))}
+        <header className="mb-12">
+          <h1 className="mb-4">{post.title}</h1>
+
+          <div className="metadata space-y-2">
+            <time dateTime={post.publishedAt}>{formattedDate}</time>
+            {post.tags.length > 0 && (
+              <div className="metadata-tertiary">
+                {post.tags.join(", ")}
+              </div>
+            )}
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold leading-tight text-[var(--color-text-primary)] mb-4">
-            {post.title}
-          </h1>
-          <time
-            dateTime={post.publishedAt}
-            className="text-sm text-[var(--color-text-secondary)]"
-          >
-            {formattedDate}
-          </time>
         </header>
 
         <article
           className="prose"
           dangerouslySetInnerHTML={{ __html: html }}
         />
+
+        <div className="mt-12 pt-8 border-t border-[var(--color-rule)]">
+          <Link href="/blog">
+            ← Back to all writing
+          </Link>
+        </div>
       </div>
     </div>
   );

@@ -1,10 +1,10 @@
+import Link from "next/link";
 import { blogPosts } from "@/lib/data";
-import BlogSearch from "@/components/BlogSearch";
 
 export const metadata = {
-  title: "Blog",
+  title: "Writing",
   description:
-    "Technical articles on distributed systems, backend engineering, and DevOps.",
+    "Technical writing on blockchain security, smart contract analysis, and distributed systems.",
 };
 
 export default function BlogPage() {
@@ -13,21 +13,46 @@ export default function BlogPage() {
       new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
   );
 
-  const allTags = Array.from(new Set(sortedPosts.flatMap((p) => p.tags))).sort();
-
   return (
-    <div className="container-section py-16">
-      <header className="mb-12">
-        <h1 className="text-4xl font-bold text-[var(--color-text-primary)] mb-4">
-          Blog
-        </h1>
-        <p className="text-lg text-[var(--color-text-secondary)]">
-          Insights on distributed systems, backend engineering, databases, and
-          infrastructure.
-        </p>
-      </header>
+    <div className="container-editorial">
+      <section className="section-major">
+        <h1>Writing</h1>
 
-      <BlogSearch posts={sortedPosts} allTags={allTags} />
+        <p className="text-[var(--color-text-secondary)] mb-12 max-w-[42.5rem]">
+          Technical writing on blockchain security, smart contract analysis, symbolic execution,
+          and distributed systems architecture.
+        </p>
+
+        <div className="space-y-0">
+          {sortedPosts.map((post) => {
+            const date = new Date(post.publishedAt);
+            const formattedDate = date.toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            });
+
+            return (
+              <article key={post.id} className="blog-entry">
+                <time dateTime={post.publishedAt} className="blog-date">
+                  {formattedDate}
+                </time>
+                <div className="blog-content">
+                  <Link href={`/blog/${post.slug}`} className="blog-title">
+                    {post.title}
+                  </Link>
+                  <p className="blog-description">{post.excerpt}</p>
+                  {post.tags.length > 0 && (
+                    <div className="metadata-tertiary mt-2">
+                      {post.tags.join(", ")}
+                    </div>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
     </div>
   );
 }
