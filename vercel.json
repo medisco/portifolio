@@ -4,7 +4,6 @@
   "installCommand": "npm install",
   "framework": "nextjs",
   "env": [],
-  "envPrefix": "",
   "regions": ["iad1"],
   "functions": {
     "api/**/*.ts": {
